@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 public class SocketTest  {
 
+    private WebSocketClient client;
 
     protected void setUpSocket()
     {
@@ -24,18 +25,22 @@ public class SocketTest  {
             put("Sec-WebSocket-Protocol","echo-protocol");
         }};
         try {
-            WebSocketClient client = new EmptyClient(new URI("http://130.64.221.161:8080"), new Draft_10(), protocol, 10000);
+            client = new EmptyClient(new URI("http://130.64.221.161:8080"), new Draft_10(), protocol, 10000);
             client.connect();
             int i=1;
             while(!client.isOpen()){
                 i *= i;
                 i ++;
             }
-            client.send("Hi Momo");
+            System.out.println("Socket Set Up");
         } catch (Exception e) {
             System.out.println("Exception Caught");
             e.printStackTrace();
         }
+    }
+
+    public void sendToSocket(String message){
+        client.send(message);
     }
 
 
